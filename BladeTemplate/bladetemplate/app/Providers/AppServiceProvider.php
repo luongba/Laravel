@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
+use App\View\Components\Alert;
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\Facades\Blade;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +24,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Blade::if('env', function ($value) {
+            if(config(('app.env')) === $value){
+                return true;
+            }
+            return false;
+        });
+
+        Blade::component('package-alert', Alert::class);
+
     }
 }
